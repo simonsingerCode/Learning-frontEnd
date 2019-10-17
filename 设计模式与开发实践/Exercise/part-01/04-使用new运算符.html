@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>使用new运算符得到要给对象</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+  // function Person(name){
+  //   this.name = name;
+  // }
+  // Person.prototype.getName = function(){
+  //   return this.name;
+  // }
+
+  // var a = new Person('sven');
+  // console.log(a.name);
+  // console.log(a.getName());
+  // console.log(Object.getPrototypeOf(a) === Person.prototype);
+  console.log('-------------------------');
+
+  function Person(name){
+    this.name = name;
+  }
+  Person.prototype.getName = function(){
+    return this.name;
+  };
+
+  var objectFactory = function(){
+    var obj = new Object(); // 从 Object.prototype 克隆一个空的对象
+    Constructor = [].shift.call(arguments); // 去的外部传入的构造器，此例是 Person
+    obj.__proto__ = Constructor.prototype; // 指向正确的原型
+    var ret = Constructor.apply(obj,arguments); // 借用外部传入的构造器给 obj 设置属性
+
+    return typeof ret === 'object' ? ret : obj;
+  }
+
+  var a = objectFactory(Person, 'sven');
+  console.log(a.name);
+  console.log(a.getName());
+  console.log(Object.getPrototypeOf(a) === Person.prototype);
+
+</script>

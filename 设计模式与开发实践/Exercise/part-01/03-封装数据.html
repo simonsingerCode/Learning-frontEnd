@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>封装数据</title>
+</head>
+<body>
+</body>
+</html>
+<script>
+  // var myObject = (function(){
+  //   // => 私有(private)变量
+  //   var _name = 'seven';
+  //   return {
+  //     // => 公开(public)方法
+  //     getName(){
+  //       return _name;
+  //     }
+  //   }
+  // })();
+  // console.log(myObject.getName());
+  // console.log(myObject._name);
+</script>
+<script>
+
+  // ES5中 Object.create()
+  var Plane = function(){
+    this.blood = 100;
+    this.attackLevel = 1;
+    this.defenseLevel = 1;
+  };
+  var plane = new Plane();
+  plane.boold = 500;
+  plane.attackLevel = 10;
+  plane.defenseLevel = 7;
+
+  var clonePlane = Object.create(plane);
+  console.log(clonePlane);
+
+  // 如果不支持 Object.create()
+  Object.create= Object.create || function(obj){
+    var F = function(){};
+    F.prototype = obj;
+    return new F();
+  }
+
+  console.log('-------------------');
+  var obj1 = new Object();
+  var obj2 = {};
+  console.log(Object.getPrototypeOf(obj1) === Object.prototype);
+  console.log(Object.getPrototypeOf(obj2) === Object.prototype);
+</script>

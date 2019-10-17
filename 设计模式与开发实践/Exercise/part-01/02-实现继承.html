@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>实现继承</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+  var googleMap = {
+    show(){
+      console.log('开始渲染谷歌地图...');
+    }
+  };
+  var baiduMap = {
+    show(){
+      console.log('开始渲染百度地图...');
+    }
+  };
+  var renderMap = function (type) {
+    if(type === 'google'){
+      googleMap.show();
+    }else if(type === 'baidu'){
+      baiduMap.show();
+    }
+  }
+  renderMap('google');
+  renderMap('baidu');
+  // 面向对象的封装： 是将 做什么(renderMap)，和 谁去做(googleMap / baiduMap)分开封装的。
+  var renderMap = function(map){
+    if(map.show instanceof Function){
+      map.show();
+    }
+  };
+  renderMap(googleMap);
+  renderMap(baiduMap);
+</script>
