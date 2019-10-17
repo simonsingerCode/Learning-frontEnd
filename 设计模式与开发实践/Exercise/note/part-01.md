@@ -130,6 +130,7 @@
                 console.log(Object.getPrototypeOf(obj1) === Object.prototype); // true
                 console.log(Object.getPrototypeOf(obj2) === Object.prototype); // true
                 ```
+
         2. 要得到一个对象，不是通过实例化类，而是找到一个对象作为原型并克隆它
             - 使用一个new 运算符从构造器中得到一个对象
             - 在JavaScript中的函数，既可以作为普通函数调用，也可以作为构造器使用。
@@ -155,5 +156,9 @@
                 console.log(a.getName());
                 console.log(Object.getPrototypeOf(a) === Person.prototype);
                 ```
+
         3. 对象会记住它的原型
             - Javascript 中对象的原型，严格来说是：对象的构造器有原型。
+            - 参考： `obj.__proto__ = Constructor.prototype; // 指向正确的原型`
+
+        4. 如果对象无法响应某个请求，他会把这个请求委托给它自己的原型(`原型继承的精髓`)

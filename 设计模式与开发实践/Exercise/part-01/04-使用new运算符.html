@@ -45,4 +45,13 @@
   console.log(a.getName());
   console.log(Object.getPrototypeOf(a) === Person.prototype);
 
+  console.log('-----------------');
+
+  var obj = {name:'sven'};
+  var A = function(){};
+  A.prototype = obj;
+  var b = new A();
+  console.log(b.__proto__);
+  console.log(b.name);
+
 </script>
