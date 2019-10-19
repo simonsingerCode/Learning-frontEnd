@@ -48,7 +48,7 @@
       var obj = new MyClass();
       console.log(obj.name); // sven
       ```
-  - > **`如果构造器显式的返回了一个 object 类型的对象，那么此次运算的记过最终是返回的这个 object 类型的对象`; 如果构造器不显式地返回任何数据，或者是返回一个非对象类型的数据，就不会出现上述这种情况**
+  - > **`如果构造器显式的返回了一个 object 类型的对象，那么此次运算的记过最终是返回的是这个显式的 object 类型的对象`; 如果构造器不显式地返回任何数据，或者是返回一个非对象类型的数据，就不会出现上述这种情况**
       ```js
       var MyClass = function(){
       this.name = 'sven';
@@ -61,7 +61,7 @@
       ```
 
 ### 2.4 `Function.prototype.call` 或 `Function.prototype.apply` 调用
-  - 在实际项目使用过程中 如果从第二个参数开始，有三个以上的参数的话，使用 apply 比较好，如果小于3 个使用 call
+  - 在实际项目使用过程中 如果从第二个参数开始，有 3 个以上的参数的话，使用 apply 比较好，如果小于 3 个使用 call
 ---
 
 ## 3. call 和 apply 的用途
