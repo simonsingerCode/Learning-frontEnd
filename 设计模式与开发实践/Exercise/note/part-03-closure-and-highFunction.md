@@ -208,3 +208,85 @@
   - 函数作为参数，意味着，我们可以抽离出一部分容易变化的业务逻辑，把这部分业务逻辑放在函数参数中，这样就可以分离业务逻辑代码中变化和不变的部分。其中的场景就是常见的回调函数。
   - 回调函数
     - ajax 的异步请求应用中，回调函数的使用非常频繁。
+    - 当一个函数不适合执行一些请求时，我们可以把这些请求封装成一个函数，并把它作为参数传递给另外一个函数，‘委托’给另外一个函数来执行。
+    - 让函数返回一个可执行的函数，意味着运算过程是可延续的。
+---
+
+## 2. 高阶函数实现AOP
+  - AOP(面向切面编程)主要作用是把一些跟核心业务逻辑模块无关的功能抽离出来，把这些功能抽离出来之后，在通过‘动态织入’的方式掺入业务逻辑模块中。这样做首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地服用日志统计等功能模块。
+
+  - JavaScript 实现 AOP, 都是把一个函数‘动态织入’到另一个函数中，具体实现方式很多，这里通过扩展 `Function.prototype` 来实现。
+      ```js
+      Function.prototype.before = function (beforefn) {
+        var _self = this; // 保存原来函数的引用
+        return function () {  // 返回包含了原函数和新函数的'代理'函数
+          beforefn.apply(this, arguments); // 执行新函数，修正 this
+          return _self.apply(this, arguments); // 执行原函数
+        };
+      };
+
+      Function.prototype.after = function (afterfn) {
+        var _self = this;
+        return function () {
+          var ret = _self.apply(this, arguments);
+          afterfn.apply(this, arguments);
+          return ret;
+        }
+      }
+
+      var func = function () {
+        console.log(2);
+      };
+      func = func.before(function () {
+        console.log(1);
+      }).after(function () {
+        console.log(3);
+      });
+
+      func(); // 1  2  3
+      ```
+---
+
+## 3. 高阶函数的其他应用
+  1. currying 函数柯理化
+      - 柯理化的函数首先会接受一些参数，接受这些参数之后，该函数并不会立即求值，而是继续返回一个函数，刚才传入的参数在函数形成的闭包中被保存起来。待到函数被真正需要求值的时候，之前传入的所有参数都会被一次性用于求值。
+        ```js
+        var currying = function (fn) {
+          var args = [];
+          return function () {
+            if (arguments.length === 0) {
+              return fn.apply(this, args);
+            } else {
+              [].push.apply(args, arguments);
+              return arguments.callee;
+            }
+          }
+        };
+
+        var cost = (function () {
+          var money = 0;
+          return function () {
+            for (var i = 0, len = arguments.length; i < len; i++) {
+              money += arguments[i];
+            }
+            return money;
+          }
+        })();
+
+        var cost = currying(cost);
+        cost(100);
+        cost(200);
+        cost(300);
+        console.log(cost());
+        ```
+  2. 一个对象也未必只能使用它自身的方法，我们可以使用 call apply 让对象借用一个原本不属于它的方法
+  3. 把泛化的 this 提取出来的代码，如下：
+      ```js
+      Function.prototype.uncurrying = function () {
+        var self = this;
+        return function () {
+          var obj = Array.prototype.shift.call(arguments);
+          return self.apply(obj, arguments);
+        }
+      }
+      ```

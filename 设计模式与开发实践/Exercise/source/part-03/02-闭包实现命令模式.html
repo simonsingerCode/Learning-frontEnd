@@ -11,6 +11,7 @@
   <button id="undo">点击我执行命令</button>
 </body>
 </html>
+<script src="./02-closuer.js"></script>
 <script>
   // var Tv = {
   //   open: function(){
@@ -42,38 +43,37 @@
   // setCommadn(new OpenTvCommand(Tv));
 
 
+  // var Tv = {
+  //   open: function(){
+  //     console.log('打开电视...');
+  //   },
+  //   close: function(){
+  //     console.log('关上电视...');
+  //   }
+  // };
+  // var createCommand = function(receiver){
+  //   var execute = function(){
+  //     return receiver.open(); // 执行命令，打开电视
+  //   }
 
-  var Tv = {
-    open: function(){
-      console.log('打开电视...');
-    },
-    close: function(){
-      console.log('关上电视...');
-    }
-  };
-  var createCommand = function(receiver){
-    var execute = function(){
-      return receiver.open(); // 执行命令，打开电视
-    }
+  //   var undo = function(){
+  //     return receiver.close(); // 执行命令，关闭电视
+  //   }
 
-    var undo = function(){
-      return receiver.close(); // 执行命令，关闭电视
-    }
+  //   return {
+  //     execute: execute,
+  //     undo: undo
+  //   }
+  // };
 
-    return {
-      execute: execute,
-      undo: undo
-    }
-  };
+  // var setCommand = function(command){
+  //   document.getElementById('execute').onclick = function(){
+  //     command.execute(); // 输出：打开电视机
+  //   }
+  //   document.getElementById('undo').onclick = function(){
+  //     command.undo(); // 输出：关闭电视
+  //   }
+  // };
 
-  var setCommand = function(command){
-    document.getElementById('execute').onclick = function(){
-      command.execute(); // 输出：打开电视机
-    }
-    document.getElementById('undo').onclick = function(){
-      command.undo(); // 输出：关闭电视
-    }
-  };
-
-  setCommand(createCommand(Tv));
+  // setCommand(createCommand(Tv));
 </script>
