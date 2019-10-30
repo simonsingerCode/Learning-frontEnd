@@ -146,11 +146,49 @@
 // cost(300);
 // console.log(cost());
 
+// 此函数方法的作用，是让
+// Function.prototype
 
-Function.prototype.uncurrying = function () {
-  var self = this;
-  return function () {
-    var obj = Array.prototype.shift.call(arguments);
-    return self.apply(obj, arguments);
+
+// 函数节流
+// var throttle = function (fn, delay) {
+//   var _self = fn, // 保存需要被延迟执行的函数的引用
+//     timer, // 定时器
+//     firstTime = true; // 是否第一次调用
+//   return () => {
+//     var args = arguments;
+//     _me = this;
+//     if (firstTime) { // 如果第一次调用不需要执行延迟
+//       _self.apply(_me, args);
+//       return firstTime = false;
+//     }
+//     if (timer) { // 如果定时器还在，说明前一次延迟执行还没有完成
+//       return false;
+//     }
+//     timer = setTimeout(function () { // 延迟一段时间执行
+//       clearTiemout(timer);
+//       timer = null;
+//       _self.apply(_me, args);
+//     }, delay || 500);
+//   }
+// }
+// window.onresize = throttle(function () {
+//   console.log(1);
+// }, 500);
+
+var addEvent = function (elem, type, handler) {
+  if (window.addEventListener) {
+    addEvent = function (elem, type, handler) {
+      elem.addEventListener(type, handler, false);
+    }
+  } else if (window.attachEvent) {
+    addEvent = function (elem, type, handler) {
+      elem.attachEvent('on' + type, handler);
+    }
   }
-}
+  addEvent(elem, type, handler);
+};
+
+var div = documetn.getElementById('div1');
+addEvent(div, 'click', function () { console.log(1); });
+addEevnt(div, 'click', function () { console.log(2); });

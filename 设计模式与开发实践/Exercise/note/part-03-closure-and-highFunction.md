@@ -282,6 +282,7 @@
   2. 一个对象也未必只能使用它自身的方法，我们可以使用 call apply 让对象借用一个原本不属于它的方法
   3. 把泛化的 this 提取出来的代码，如下：
       ```js
+      // 通过uncurrying 的方式，Array.prototype.push.call 变成了一个通用的push 函数
       Function.prototype.uncurrying = function () {
         var self = this;
         return function () {
@@ -289,4 +290,71 @@
           return self.apply(obj, arguments);
         }
       }
+
+      for (var i = 0, fn, ary = ['push', 'shift', 'forEach']; fn = ary[i++];) {
+        Array[fn] = Array.prototype[fn].uncurrying();
+      };
+      var obj = {
+        "length": 3,
+        "0": 1,
+        "1": 2,
+        "2": 3
+      };
+      Array.push(obj, 4); // 向对象中添加一个元素
+      console.log(obj.length); // 输出：4
       ```
+---
+
+## 4. 函数节流的原理：
+  - 原理：将要被执行的函数用 setTimeout 延迟一段时间执行。如果该延迟执行还没有完成，则忽略接下来调用该函数的请求。
+  - 参数：第一个：需要被延迟执行的函数；第二个：延迟时间
+    ```js
+    var throttle = function (fn, delay) {
+      var _self = fn, // 保存需要被延迟执行的函数的引用
+        timer, // 定时器
+        firstTime = true; // 是否第一次调用
+      return () => {
+        var args = arguments;
+        _me = this;
+        if (firstTime) { // 如果第一次调用不需要执行延迟
+          _self.apply(_me, args);
+          return firstTime = false;
+        }
+        if (timer) { // 如果定时器还在，说明前一次延迟执行还没有完成
+          return false;
+        }
+        timer = setTimeout(function () { // 延迟一段时间执行
+          clearTiemout(timer);
+          timer = null;
+          _self.apply(_me, args);
+        }, delay || 500);
+      }
+    }
+    window.onresize = throttle(function () {
+      console.log(1);
+    }, 500);
+    ```
+---
+
+
+## 5. 函数的懒加载
+  - 原理分析：声明一个普通函数，函数里面有一些分支判断。第一次进入分支之后，在函数内部会重写这个函数，重写之后的函数就是我们所期望的函数，在下一次进入函数的时候，函数里就不存在分支语句。
+  - 代码如下：
+    ```js
+    var addEvent = function (elem, type, handler) {
+      if (window.addEventListener) {
+        addEvent = function (elem, type, handler) {
+          elem.addEventListener(type, handler, false);
+        }
+      } else if (window.attachEvent) {
+        addEvent = function (elem, type, handler) {
+          elem.attachEvent('on' + type, handler);
+        }
+      }
+      addEvent(elem, type, handler);
+    };
+
+    var div = documetn.getElementById('div1');
+    addEvent(div, 'click', function () { console.log(1); });
+    addEevnt(div, 'click', function () { console.log(2); });
+    ```
