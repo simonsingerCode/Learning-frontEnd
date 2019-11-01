@@ -1,0 +1,68 @@
+{
+  // 编辑时缩进2个空格
+  "editor.tabSize": 2,
+  // 自动换行
+  "editor.wordWrap": "on",
+  // 默认打开HTML文件为 Chrome 浏览器
+  "open-in-browser.default": "{\"open-in-browser.default\":\"Chrome\"}",
+  // 自动格式化粘贴内容
+  "editor.formatOnPaste": true,
+  // 编辑时自动格式化改行
+  "editor.formatOnType": true,
+  // minni缩略图的宽度
+  "editor.minimap.maxColumn": 60,
+  // 文件末尾插入新行
+  "files.insertFinalNewline": true,
+  // 删除尾随空格
+  "files.trimTrailingWhitespace": true,
+  // 保存最近使用过的历史记录
+  "workbench.commandPalette.history": 30,
+  // 终端光标闪烁
+  "terminal.integrated.cursorBlinking": true,
+  // 总是显式 eslint 状态
+  "eslint.alwaysShowStatus": true,
+  // 启用 eslint 保存时自动格式化
+  "eslint.autoFixOnSave": true,
+  // html 以新行结尾
+  "html.format.endWithNewline": true,
+  // HTML CSS类 完成启用 Emmet 支持
+  "html-css-class-completion.enableEmmetSupport": true,
+  // 将文件扩展名添加到导入语句
+  "path-intellisense.extensionOnImport": true,
+  // json 自动格式化
+  "[jsonc]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  // 添加 vue 支持
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }, "html", "vue"
+  ],
+  // prettier eslint 集成
+  "prettier.eslintIntegration": true,
+  "prettier.useTabs": true,
+  // 定义 constructor 关键字之后空格处理
+  "javascript.format.insertSpaceAfterConstructor": true,
+  // 定义 中括号 前后的空格处理
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+  // 定义函数 参数 括号前后空格处理
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  // typescript 定义 中括号 前后的空格处理
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+   // 不显示右侧缩略图
+  "editor.minimap.enabled": false,
+  // typescript 定义函数 参数 括号前后空格处理
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  // 使用制表符进行所有格式化程序继承的缩进
+  "vetur.format.options.useTabs": true,
+  // 脚本区域是否有初始缩进
+  "vetur.format.scriptInitialIndent": true,
+  // style 样式 区域是否有初始缩进
+  "vetur.format.styleInitialIndent": true,
+  "prettier.jsxBracketSameLine": true,
+  "update.mode": "none",
+}
